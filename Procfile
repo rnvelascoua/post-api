@@ -1,1 +1,0 @@
-web: java -jar target/velasco-post-api-1.0.0-SNAPSHOT.jar
