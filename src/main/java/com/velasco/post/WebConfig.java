@@ -1,5 +1,6 @@
 package com.velasco.post;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -11,13 +12,15 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
+            @Value("${ALLOWED_ORIGIN}")
+            private String allowedOrigin;
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Allow all paths
-                        .allowedOrigins("http://localhost:5173") // Add your frontend's URL
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // HTTP methods
-                        .allowedHeaders("*") // Allow all headers
-                        .allowCredentials(true); // Allow cookies
+                registry.addMapping("/**") // Allow all endpoints
+                        .allowedOrigins("http://localhost:5173") // Replace with your frontend's URL
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true); // If using cookies or authentication headers
             }
         };
     }
