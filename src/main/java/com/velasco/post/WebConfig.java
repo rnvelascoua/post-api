@@ -12,12 +12,12 @@ public class WebConfig {
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
-            @Value("${ALLOWED_ORIGIN}")
-            private String allowedOrigin;
+            @Value("${ALLOWED_ORIGINS:http://localhost:3000}")
+            private String allowedOrigins;
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // Allow all endpoints
-                        .allowedOrigins("http://localhost:5173") // Replace with your frontend's URL
+                        .allowedOrigins(allowedOrigins.split(",")) // Support multiple origins separated by commas
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true); // If using cookies or authentication headers
